@@ -27,8 +27,20 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
 
     private ByteBuf getByteBuf(ChannelHandlerContext ctx) {
         ByteBuf buffer = ctx.alloc().buffer();
-        byte[] bytes = "hello world".getBytes(Charset.forName("utf-8"));
+        byte[] bytes = "hello world - from client".getBytes(Charset.forName("utf-8"));
         buffer.writeBytes(bytes);
         return buffer;
+    }
+
+    /**
+     * 读取服务端返回的消息
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf byteBuf = (ByteBuf) msg;
+        System.out.println(new Date() + ": 客户端读到数据 -> " + byteBuf.toString(Charset.forName("utf-8")));
     }
 }
