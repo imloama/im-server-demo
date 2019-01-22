@@ -3,6 +3,7 @@
  */
 package com.haobin.server;
 
+import com.haobin.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -39,13 +40,7 @@ public class ServerApp {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new StringDecoder());
-                        ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-                            @Override
-                            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-                                System.out.println(msg);
-                            }
-                        });
+                        ch.pipeline().addLast(new ServerHandler());
                     }
                 })
                 // 绑定端口启动， 这是一个异步方法, 返回一个ChannelFuture
