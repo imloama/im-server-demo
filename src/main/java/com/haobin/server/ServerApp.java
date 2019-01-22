@@ -1,9 +1,8 @@
 /**
  * BrandBigData.com Inc. Copyright (c) 2018 All Rights Reserved.
  */
-package com.haobin.io_model.netty;
+package com.haobin.server;
 
-import com.haobin.io_model.netty.server_handler.FirstServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -16,13 +15,12 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
 /**
- * netty的服务端
+ *
  *
  * @author HaoBin
- * @version $Id: NettyServer.java, v0.1 2019/1/15 17:06 HaoBin 
+ * @version $Id: ServerApp.java, v0.1 2019/1/22 14:39 HaoBin 
  */
-public class NettyServer {
-
+public class ServerApp {
     public static void main(String[] args) {
         // 服务端启动引导类
         ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -41,7 +39,6 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new FirstServerHandler());
                         ch.pipeline().addLast(new StringDecoder());
                         ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
                             @Override
