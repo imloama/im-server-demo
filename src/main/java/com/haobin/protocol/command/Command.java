@@ -4,11 +4,13 @@
 package com.haobin.protocol.command;
 
 /**
- *
- *
  * @author HaoBin
- * @version $Id: Command.java, v0.1 2019/1/22 17:44 HaoBin 
+ * @version $Id: Command.java, v0.1 2019/1/22 17:44 HaoBin
  */
 public interface Command {
+
+    /**
+     * 登录指令
+     */
     Byte LOGIN_REQUEST = 1;
 }
