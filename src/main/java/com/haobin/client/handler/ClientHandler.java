@@ -4,9 +4,11 @@
 package com.haobin.client.handler;
 
 import com.haobin.protocol.Packet;
-import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.PacketCodeC;
+import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.response.LoginResponsePacket;
+import com.haobin.protocol.response.MessageResponsePacket;
+import com.haobin.utils.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -14,8 +16,6 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- *
- *
  * @author HaoBin
  * @version $Id: ClientHandler.java, v0.1 2019/1/22 14:10 HaoBin
  */
@@ -23,7 +23,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 连接到服务端后开始调用handler
-     * @param ctx
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -44,8 +43,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 收到服务端响应后调用
-     * @param ctx
-     * @param msg
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
@@ -56,9 +53,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
+                LoginUtil.markAsLogin(ctx.channel());
             } else {
                 System.out.println(new Date() + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
             }
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
     }
 }
