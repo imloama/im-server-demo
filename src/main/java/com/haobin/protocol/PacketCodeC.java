@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 编码
+ * 编/解码 工具
  *
  * @author HaoBin
  * @version $Id: PacketCodeC.java, v0.1 2019/1/22 17:38 HaoBin
