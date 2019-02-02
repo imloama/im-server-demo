@@ -1,7 +1,7 @@
 /**
  * BrandBigData.com Inc. Copyright (c) 2018 All Rights Reserved.
  */
-package com.haobin.protocol.command;
+package com.haobin.protocol;
 
 /**
  * 通信包

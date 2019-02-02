@@ -3,8 +3,8 @@
  */
 package com.haobin.client.handler;
 
-import com.haobin.protocol.command.LoginRequestPacket;
-import com.haobin.protocol.command.PacketCodeC;
+import com.haobin.protocol.request.LoginRequestPacket;
+import com.haobin.protocol.PacketCodeC;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

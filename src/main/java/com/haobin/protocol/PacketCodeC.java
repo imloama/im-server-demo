@@ -1,10 +1,11 @@
 /**
  * BrandBigData.com Inc. Copyright (c) 2018 All Rights Reserved.
  */
-package com.haobin.protocol.command;
+package com.haobin.protocol;
 
 import static com.haobin.protocol.command.Command.LOGIN_REQUEST;
 
+import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.serialize.Serializer;
 import com.haobin.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
