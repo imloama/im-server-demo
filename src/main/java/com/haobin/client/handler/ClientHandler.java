@@ -31,7 +31,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         // 创建登录对象
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         loginRequestPacket.setUserId(UUID.randomUUID().toString());
-        loginRequestPacket.setUsername("flash");
+        loginRequestPacket.setUsername("user");
         loginRequestPacket.setPassword("pwd");
 
         // 编码
@@ -48,9 +48,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
         Packet packet = PacketCodeC.INSTANCE.decode(byteBuf);
+        System.out.println(packet);
         if (packet instanceof LoginResponsePacket) {
+            System.out.println("登录响应");
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
-
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
                 LoginUtil.markAsLogin(ctx.channel());

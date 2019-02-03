@@ -3,9 +3,12 @@
  */
 package com.haobin.protocol;
 
-import static com.haobin.protocol.command.Command.LOGIN_REQUEST;
 
+import com.haobin.protocol.command.Command;
 import com.haobin.protocol.request.LoginRequestPacket;
+import com.haobin.protocol.request.MessageRequestPacket;
+import com.haobin.protocol.response.LoginResponsePacket;
+import com.haobin.protocol.response.MessageResponsePacket;
 import com.haobin.serialize.Serializer;
 import com.haobin.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -30,7 +33,10 @@ public class PacketCodeC {
 
     static {
         packetTypeMap = new HashMap<>();
-        packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        packetTypeMap.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
+        packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
@@ -86,12 +92,10 @@ public class PacketCodeC {
     }
 
     private Serializer getSerializer(byte serializeAlgorithm) {
-
         return serializerMap.get(serializeAlgorithm);
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
-
         return packetTypeMap.get(command);
     }
 

@@ -24,12 +24,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)  {
-        // 登录流程
-        System.out.println(new Date() + ": 客户端开始登录……");
         ByteBuf requestByteBuf = (ByteBuf) msg;
         Packet packet = PacketCodeC.INSTANCE.decode(requestByteBuf);
+
         if (packet instanceof LoginRequestPacket) {
             // 登录流程
+            System.out.println(new Date() + ": 客户端开始登录……");
             LoginRequestPacket loginRequestPacket = (LoginRequestPacket) packet;
             LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
             loginResponsePacket.setVersion(packet.getVersion());
