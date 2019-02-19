@@ -3,15 +3,18 @@
  */
 package com.haobin.server;
 
-import com.haobin.server.handler.ServerHandler;
+import com.haobin.client.handler.MessageResponseHandler;
+import com.haobin.codec.PacketDecoder;
+import com.haobin.codec.PacketEncoder;
+import com.haobin.codec.Spliter;
+import com.haobin.server.handler.LoginRequestHandler;
+import com.haobin.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 import java.util.Date;
 
 /**
@@ -43,7 +46,11 @@ public class ServerApp {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new Spliter());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
         bind(serverBootstrap, PORT);
