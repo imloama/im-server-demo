@@ -13,6 +13,11 @@ import com.haobin.protocol.Packet;
  * @version $Id: LoginResponsePacket.java, v0.1 2019/2/2 15:27 HaoBin 
  */
 public class LoginResponsePacket extends Packet {
+
+    private String userId;
+
+    private String userName;
+
     private boolean success;
 
     private String reason;
@@ -36,5 +41,21 @@ public class LoginResponsePacket extends Packet {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

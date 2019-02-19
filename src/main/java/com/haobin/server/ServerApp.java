@@ -3,10 +3,10 @@
  */
 package com.haobin.server;
 
-import com.haobin.client.handler.MessageResponseHandler;
 import com.haobin.codec.PacketDecoder;
 import com.haobin.codec.PacketEncoder;
 import com.haobin.codec.Spliter;
+import com.haobin.server.handler.AuthHandler;
 import com.haobin.server.handler.LoginRequestHandler;
 import com.haobin.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -49,6 +49,7 @@ public class ServerApp {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
