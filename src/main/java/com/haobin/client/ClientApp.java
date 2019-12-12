@@ -18,6 +18,9 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +32,8 @@ import java.util.concurrent.TimeUnit;
  * @version $Id: ClientApp.java, v0.1 2019/1/22 14:12 HaoBin
  */
 public class ClientApp {
+    
+    private Logger logger = LoggerFactory.getLogger(ClientApp.class);
 
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";
@@ -37,7 +42,6 @@ public class ClientApp {
 
     public static void main(String[] args) {
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-
         Bootstrap bootstrap = new Bootstrap();
         bootstrap
                 // 线程模型
@@ -59,10 +63,16 @@ public class ClientApp {
 
                     }
                 });
-
         connect(bootstrap, HOST, PORT, MAX_RETRY);
     }
 
+    /**
+     * 连接 server
+     * @param bootstrap 启动模型
+     * @param host 目标主机
+     * @param port 目标端口
+     * @param retry 重试次数
+     */
     private static void connect(Bootstrap bootstrap, String host, int port, int retry) {
         bootstrap.connect(host, port).addListener(future -> {
             if (future.isSuccess()) {

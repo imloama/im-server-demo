@@ -4,6 +4,7 @@
 package com.haobin.protocol.command;
 
 /**
+ * 指令常量
  * @author HaoBin
  * @version $Id: Command.java, v0.1 2019/1/22 17:44 HaoBin
  */
