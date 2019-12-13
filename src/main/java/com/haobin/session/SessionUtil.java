@@ -4,6 +4,8 @@
 package com.haobin.session;
 
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,6 +17,8 @@ public class SessionUtil {
 
     // userId -> channel 的映射
     private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
+    // groupId -> group 映射
+    private static final Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
 
     /**
      * 绑定登录标识
@@ -61,5 +65,23 @@ public class SessionUtil {
      */
     public static Channel getChannel(String userId) {
         return userIdChannelMap.get(userId);
+    }
+
+    /**
+     * 绑定 channelGroup
+     * @param groupId
+     * @param channelGroup
+     */
+    public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
+        groupIdChannelGroupMap.put(groupId, channelGroup);
+    }
+
+    /**
+     * 获取 channelGroup
+     * @param groupId
+     * @return
+     */
+    public static ChannelGroup getChannelGroup(String groupId) {
+        return groupIdChannelGroupMap.get(groupId);
     }
 }

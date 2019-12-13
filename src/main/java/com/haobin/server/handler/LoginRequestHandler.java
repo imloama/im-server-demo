@@ -7,6 +7,7 @@ import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.response.LoginResponsePacket;
 import com.haobin.session.Session;
 import com.haobin.session.SessionUtil;
+import com.haobin.utils.IDUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.Date;
@@ -27,13 +28,13 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
         loginResponsePacket.setVersion(loginRequestPacket.getVersion());
-        loginResponsePacket.setUserName(loginRequestPacket.getUsername());
+        loginResponsePacket.setUserName(loginRequestPacket.getUserName());
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
-            String userId = randomUserId();
+            String userId = IDUtil.randomId();
             loginResponsePacket.setUserId(userId);
-            System.out.println("[" + loginRequestPacket.getUsername() + "]登录成功");
-            SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUsername()), ctx.channel());
+            System.out.println("[" + loginRequestPacket.getUserName() + "]登录成功");
+            SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUserName()), ctx.channel());
         } else {
             loginResponsePacket.setReason("账号密码校验失败");
             loginResponsePacket.setSuccess(false);
@@ -53,9 +54,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         return true;
     }
 
-    private String randomUserId() {
-        return UUID.randomUUID().toString().split("-")[0];
-    }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {

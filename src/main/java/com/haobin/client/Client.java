@@ -3,6 +3,8 @@
  */
 package com.haobin.client;
 
+import com.haobin.client.console.ConsoleCommandManager;
+import com.haobin.client.console.command.LoginConsoleCommand;
 import com.haobin.client.handler.LoginResponseHandler;
 import com.haobin.client.handler.MessageResponseHandler;
 import com.haobin.codec.PacketDecoder;
@@ -112,36 +114,17 @@ public class Client {
      * 接收控制台消息
      */
     private void startConsoleThread(Channel channel) {
-        Scanner sc = new Scanner(System.in);
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+        Scanner scanner = new Scanner(System.in);
         new Thread(() -> {
             while (!Thread.interrupted()) {
                 if (!SessionUtil.hasLogin(channel)) {
-                    logger.info("输入用户名登录: ");
-                    String username = sc.nextLine();
-                    loginRequestPacket.setUsername(username);
-                    // 密码使用默认的
-                    loginRequestPacket.setPassword("pwd");
-                    // 发送登录数据包
-                    channel.writeAndFlush(loginRequestPacket);
-                    waitForLoginResponse();
+                    loginConsoleCommand.exec(scanner, channel);
                 } else {
-                    // 如果已登录，则发送消息
-                    String toUserId = sc.next();
-                    String message = sc.next();
-                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+                    consoleCommandManager.exec(scanner, channel);
                 }
             }
         }).start();
-    }
-
-    /**
-     * 等待回应
-     */
-    private static void waitForLoginResponse() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
-        }
     }
 }

@@ -7,6 +7,7 @@ import com.haobin.codec.PacketDecoder;
 import com.haobin.codec.PacketEncoder;
 import com.haobin.codec.Spliter;
 import com.haobin.server.handler.AuthHandler;
+import com.haobin.server.handler.CreateGroupRequestHandler;
 import com.haobin.server.handler.LoginRequestHandler;
 import com.haobin.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -64,9 +65,13 @@ public class Server {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
+                        // 登录请求
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new AuthHandler());
+                        // 单聊信息处理
                         ch.pipeline().addLast(new MessageRequestHandler());
+                        // 创建群聊
+                        ch.pipeline().addLast(new CreateGroupRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });

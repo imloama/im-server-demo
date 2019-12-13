@@ -27,7 +27,9 @@ public class Spliter extends LengthFieldBasedFrameDecoder {
     public Spliter() {
         super(Integer.MAX_VALUE, LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH);
     }
-
+    /**
+     * 拒绝非本协议的连接
+     */
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         // 如果前4个字节(int)不是魔数，则并非规定通讯
