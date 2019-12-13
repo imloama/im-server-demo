@@ -6,10 +6,7 @@ package com.haobin.server;
 import com.haobin.codec.PacketDecoder;
 import com.haobin.codec.PacketEncoder;
 import com.haobin.codec.Spliter;
-import com.haobin.server.handler.AuthHandler;
-import com.haobin.server.handler.CreateGroupRequestHandler;
-import com.haobin.server.handler.LoginRequestHandler;
-import com.haobin.server.handler.MessageRequestHandler;
+import com.haobin.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -72,6 +69,8 @@ public class Server {
                         ch.pipeline().addLast(new MessageRequestHandler());
                         // 创建群聊
                         ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        // 加入群聊
+                        ch.pipeline().addLast(new JoinGroupRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });

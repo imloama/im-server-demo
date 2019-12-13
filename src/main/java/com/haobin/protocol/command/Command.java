@@ -48,8 +48,14 @@ public interface Command {
 
     Byte LIST_GROUP_MEMBERS_RESPONSE = 10;
 
+    /**
+     * 加入群聊请求
+     */
     Byte JOIN_GROUP_REQUEST = 11;
 
+    /**
+     * 加入群聊响应
+     */
     Byte JOIN_GROUP_RESPONSE = 12;
 
     Byte QUIT_GROUP_REQUEST = 13;
