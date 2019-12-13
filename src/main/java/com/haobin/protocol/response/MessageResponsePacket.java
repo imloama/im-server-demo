@@ -11,10 +11,11 @@ import com.haobin.protocol.command.Command;
  * @version $Id: MessageResponsePacket.java, v0.1 2019/2/2 21:22 HaoBin
  */
 public class MessageResponsePacket extends Packet {
-
+    // 发送人id
     private String fromUserId;
-
+    // 发送人姓名
     private String fromUserName;
+    // 消息内容
     private String message;
 
     @Override

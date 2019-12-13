@@ -5,7 +5,7 @@ package com.haobin.client.handler;
 
 import com.haobin.protocol.response.LoginResponsePacket;
 import com.haobin.session.Session;
-import com.haobin.utils.SessionUtil;
+import com.haobin.session.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 

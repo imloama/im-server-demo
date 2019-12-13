@@ -10,6 +10,9 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
+ * 继承自 Netty ByteToMessageDecoder 二进制转java对象
+ * 这个类会自动释放 ByteBuf 堆外内存
+ * 详细见:
  * @author HaoBin
  * @version $Id: PacketDecoder.java, v0.1 2019/2/19 10:25 HaoBin
  */

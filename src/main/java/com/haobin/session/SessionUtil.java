@@ -1,10 +1,8 @@
 /**
  * BrandBigData.com Inc. Copyright (c) 2018 All Rights Reserved.
  */
-package com.haobin.utils;
+package com.haobin.session;
 
-import com.haobin.attribute.Attributes;
-import com.haobin.session.Session;
 import io.netty.channel.Channel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,30 +16,50 @@ public class SessionUtil {
     // userId -> channel 的映射
     private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
 
+    /**
+     * 绑定登录标识
+     * @param session
+     * @param channel
+     */
     public static void bindSession(Session session, Channel channel) {
         userIdChannelMap.put(session.getUserId(), channel);
-        channel.attr(Attributes.SESSION).set(session);
+        channel.attr(AttributesKey.SESSION).set(session);
     }
 
+    /**
+     * 删除通道 session
+     * @param channel
+     */
     public static void unBindSession(Channel channel) {
         if (hasLogin(channel)) {
             userIdChannelMap.remove(getSession(channel).getUserId());
-            channel.attr(Attributes.SESSION).set(null);
+            channel.attr(AttributesKey.SESSION).set(null);
         }
     }
 
+    /**
+     * 该通道是否有 session(是否登录)
+     * @param channel
+     * @return
+     */
     public static boolean hasLogin(Channel channel) {
-
-        return channel.hasAttr(Attributes.SESSION);
+        return channel.hasAttr(AttributesKey.SESSION);
     }
 
+    /**
+     * 获取通道的 session
+     * @param channel
+     * @return
+     */
     public static Session getSession(Channel channel) {
-
-        return channel.attr(Attributes.SESSION).get();
+        return channel.attr(AttributesKey.SESSION).get();
     }
 
+    /**
+     * 获取用户的通道
+     * @param userId
+     */
     public static Channel getChannel(String userId) {
-
         return userIdChannelMap.get(userId);
     }
 }

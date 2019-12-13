@@ -6,7 +6,7 @@ package com.haobin.server.handler;
 import com.haobin.protocol.request.MessageRequestPacket;
 import com.haobin.protocol.response.MessageResponsePacket;
 import com.haobin.session.Session;
-import com.haobin.utils.SessionUtil;
+import com.haobin.session.SessionUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
