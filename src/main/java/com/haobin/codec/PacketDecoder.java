@@ -7,6 +7,9 @@ import com.haobin.protocol.PacketCodeC;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 /**
@@ -17,6 +20,8 @@ import java.util.List;
  * @version $Id: PacketDecoder.java, v0.1 2019/2/19 10:25 HaoBin
  */
 public class PacketDecoder extends ByteToMessageDecoder {
+
+    private Logger logger = LoggerFactory.getLogger(PacketDecoder.class);
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) {

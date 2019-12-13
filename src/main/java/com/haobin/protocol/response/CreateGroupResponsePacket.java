@@ -22,7 +22,6 @@ public class CreateGroupResponsePacket extends Packet {
 
     @Override
     public Byte getCommand() {
-
         return Command.CREATE_GROUP_RESPONSE;
     }
 }

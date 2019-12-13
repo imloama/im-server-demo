@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
+/**h
  * @Author HaoBin
  * @Create 2019/12/13 16:16
  * @Description: 创建群聊命令指令

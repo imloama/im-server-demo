@@ -4,13 +4,17 @@
 package com.haobin.protocol;
 
 import com.haobin.protocol.command.Command;
+import com.haobin.protocol.request.CreateGroupRequestPacket;
 import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.request.MessageRequestPacket;
+import com.haobin.protocol.response.CreateGroupResponsePacket;
 import com.haobin.protocol.response.LoginResponsePacket;
 import com.haobin.protocol.response.MessageResponsePacket;
 import com.haobin.protocol.serialize.Serializer;
 import com.haobin.protocol.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +26,8 @@ import java.util.Map;
  * @version $Id: PacketCodeC.java, v0.1 2019/1/22 17:38 HaoBin
  */
 public class PacketCodeC {
+    
+    private Logger logger = LoggerFactory.getLogger(PacketCodeC.class);
     // 魔数， 用来校验协议是否正确(4 字节)
     public static final int MAGIC_NUMBER = 0x12345678;
     // 单例实例
@@ -44,6 +50,8 @@ public class PacketCodeC {
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
@@ -97,8 +105,10 @@ public class PacketCodeC {
         Serializer serializer = getSerializer(serializeAlgorithm);
 
         if (requestType != null && serializer != null) {
+            logger.debug("序列化消息结果： {}", serializer.deserialize(requestType, bytes));
             return serializer.deserialize(requestType, bytes);
         }
+        logger.error("");
         return null;
     }
 
