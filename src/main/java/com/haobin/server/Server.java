@@ -71,6 +71,10 @@ public class Server {
                         ch.pipeline().addLast(new CreateGroupRequestHandler());
                         // 加入群聊
                         ch.pipeline().addLast(new JoinGroupRequestHandler());
+                        // 退群处理
+                        ch.pipeline().addLast(new QuitGroupRequestHandler());
+                        // 成员列表处理
+                        ch.pipeline().addLast(new ListGroupMemberRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });

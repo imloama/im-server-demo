@@ -20,7 +20,6 @@ public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGro
         String groupId = requestPacket.getGroupId();
         ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
         channelGroup.add(ctx.channel());
-
         // 2. 构造加群响应发送给客户端
         JoinGroupResponsePacket responsePacket = new JoinGroupResponsePacket();
 

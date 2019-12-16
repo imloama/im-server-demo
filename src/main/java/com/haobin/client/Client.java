@@ -5,12 +5,12 @@ package com.haobin.client;
 
 import com.haobin.client.console.ConsoleCommandManager;
 import com.haobin.client.console.command.LoginConsoleCommand;
-import com.haobin.client.handler.LoginResponseHandler;
-import com.haobin.client.handler.MessageResponseHandler;
+import com.haobin.client.handler.*;
 import com.haobin.codec.PacketDecoder;
 import com.haobin.codec.PacketEncoder;
 import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.request.MessageRequestPacket;
+import com.haobin.server.handler.JoinGroupRequestHandler;
 import com.haobin.session.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -71,8 +71,18 @@ public class Client {
                     @Override
                     public void initChannel(SocketChannel ch) {
                         ch.pipeline().addLast(new PacketDecoder());
+                        // 登录响应
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        // 消息接受响应
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        // 创建群聊响应
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        // 加入群聊响应
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        // 退出群聊
+                        ch.pipeline().addLast(new QuitGroupResponseHandler());
+                        // 成员列表响应
+                        ch.pipeline().addLast(new ListGroupMemberResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                     }

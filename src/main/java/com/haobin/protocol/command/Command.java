@@ -44,8 +44,14 @@ public interface Command {
      */
     Byte CREATE_GROUP_RESPONSE = 8;
 
+    /**
+     * 成员列表请求
+     */
     Byte LIST_GROUP_MEMBERS_REQUEST = 9;
 
+    /**
+     * 成员列表响应
+     */
     Byte LIST_GROUP_MEMBERS_RESPONSE = 10;
 
     /**
@@ -58,7 +64,13 @@ public interface Command {
      */
     Byte JOIN_GROUP_RESPONSE = 12;
 
+    /**
+     * 退出群聊请求
+     */
     Byte QUIT_GROUP_REQUEST = 13;
 
+    /**
+     * 退出群聊响应
+     */
     Byte QUIT_GROUP_RESPONSE = 14;
 }
