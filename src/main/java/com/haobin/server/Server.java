@@ -53,7 +53,7 @@ public class Server {
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024)
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
-                // 开启 tcp_nodelay(禁用 nagle)
+                // 开启 tcp_nodelay (禁用 nagle)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 // ChannelInitializer是连接的读写处理链
                 // NioSocketChannel是netty对NIO类型连接的抽象与上面的NioServerSocketChannel类似， 等同于 socketServer和socket

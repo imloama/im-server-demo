@@ -1,7 +1,6 @@
 package com.haobin.client.console;
 
-import com.haobin.client.console.command.CreateGroupConsoleCommand;
-import com.haobin.client.console.command.JoinGroupConsoleCommand;
+import com.haobin.client.console.command.*;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +22,12 @@ public class ConsoleCommandManager implements ConsoleCommand {
 
     public ConsoleCommandManager() {
         this.consoleCommandMap = new HashMap<>();
+        this.consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
         this.consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
         this.consoleCommandMap.put("joinGroup", new JoinGroupConsoleCommand());
+        this.consoleCommandMap.put("quitGroup", new QuitGroupConsoleCommand());
+        this.consoleCommandMap.put("listGroupMembers", new ListGroupMemberConsoleCommand());
+        this.consoleCommandMap.put("sendToGroup", new SendToGroupConsoleCommand());
     }
 
     @Override
