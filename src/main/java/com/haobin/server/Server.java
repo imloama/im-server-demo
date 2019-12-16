@@ -3,8 +3,7 @@
  */
 package com.haobin.server;
 
-import com.haobin.codec.PacketDecoder;
-import com.haobin.codec.PacketEncoder;
+import com.haobin.codec.PacketCodecHandler;
 import com.haobin.codec.Spliter;
 import com.haobin.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
@@ -61,9 +60,10 @@ public class Server {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new Spliter());
-                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         // 登录请求
-                        ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                        // 认证
                         ch.pipeline().addLast(new AuthHandler());
                         // 单聊信息处理
                         ch.pipeline().addLast(new MessageRequestHandler());
@@ -75,7 +75,6 @@ public class Server {
                         ch.pipeline().addLast(new QuitGroupRequestHandler());
                         // 成员列表处理
                         ch.pipeline().addLast(new ListGroupMemberRequestHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
         bind(serverBootstrap, port);

@@ -6,11 +6,7 @@ package com.haobin.client;
 import com.haobin.client.console.ConsoleCommandManager;
 import com.haobin.client.console.command.LoginConsoleCommand;
 import com.haobin.client.handler.*;
-import com.haobin.codec.PacketDecoder;
-import com.haobin.codec.PacketEncoder;
-import com.haobin.protocol.request.LoginRequestPacket;
-import com.haobin.protocol.request.MessageRequestPacket;
-import com.haobin.server.handler.JoinGroupRequestHandler;
+import com.haobin.codec.PacketCodecHandler;
 import com.haobin.session.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -20,7 +16,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +65,7 @@ public class Client {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         // 登录响应
                         ch.pipeline().addLast(new LoginResponseHandler());
                         // 消息接受响应
@@ -83,8 +78,6 @@ public class Client {
                         ch.pipeline().addLast(new QuitGroupResponseHandler());
                         // 成员列表响应
                         ch.pipeline().addLast(new ListGroupMemberResponseHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
-
                     }
                 });
         connect(bootstrap, host, port, maxRetry);

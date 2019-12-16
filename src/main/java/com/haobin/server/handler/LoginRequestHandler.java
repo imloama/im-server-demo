@@ -8,6 +8,7 @@ import com.haobin.protocol.response.LoginResponsePacket;
 import com.haobin.session.Session;
 import com.haobin.session.SessionUtil;
 import com.haobin.utils.IDUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.Date;
@@ -16,8 +17,15 @@ import java.util.UUID;
 /**
  * @author HaoBin
  * @version $Id: LoginRequestHandler.java, v0.1 2019/2/18 21:34 HaoBin
+ * 注：
+ * @ChannelHandler.Sharable 显示地告诉 Netty，这个 handler 是支持多个 channel 共享的
  */
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
+
+    protected LoginRequestHandler() {}
 
     /**
      * 继承于SimpleChannelInboundHandler， 此类带泛型， 需要重写channelRead0
