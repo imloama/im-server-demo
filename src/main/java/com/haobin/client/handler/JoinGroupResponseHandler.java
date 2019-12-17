@@ -15,6 +15,10 @@ public class JoinGroupResponseHandler extends SimpleChannelInboundHandler<JoinGr
 
     private Logger logger = LoggerFactory.getLogger(JoinGroupResponseHandler.class);
 
+    public static final JoinGroupResponseHandler INSTANCE = new JoinGroupResponseHandler();
+
+    private JoinGroupResponseHandler() {}
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, JoinGroupResponsePacket response) throws Exception {
         if (response.isSuccess()) {

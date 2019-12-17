@@ -7,6 +7,7 @@ import com.haobin.client.console.ConsoleCommandManager;
 import com.haobin.client.console.command.LoginConsoleCommand;
 import com.haobin.client.handler.*;
 import com.haobin.codec.PacketCodecHandler;
+import com.haobin.codec.Spliter;
 import com.haobin.session.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -65,19 +66,20 @@ public class Client {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
+                        ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         // 登录响应
-                        ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(LoginResponseHandler.INSTANCE);
                         // 消息接受响应
-                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(MessageResponseHandler.INSTANCE);
                         // 创建群聊响应
-                        ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        ch.pipeline().addLast(CreateGroupResponseHandler.INSTANCE);
                         // 加入群聊响应
-                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        ch.pipeline().addLast(JoinGroupResponseHandler.INSTANCE);
                         // 退出群聊
-                        ch.pipeline().addLast(new QuitGroupResponseHandler());
+                        ch.pipeline().addLast(QuitGroupResponseHandler.INSTANCE);
                         // 成员列表响应
-                        ch.pipeline().addLast(new ListGroupMemberResponseHandler());
+                        ch.pipeline().addLast(ListGroupMemberResponseHandler.INSTANCE);
                     }
                 });
         connect(bootstrap, host, port, maxRetry);

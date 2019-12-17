@@ -50,6 +50,11 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         }
 
         // 登录响应
+        /**
+         * ctx.channel.writeAndFlush 传播机制：从pipeline最后一个 outBound 开始向前传播
+         * ctx.writeAndFlush 传播机制： 从当前节点往前找到第一个 outBound 处理(不会经过后面的 outBound 节点)
+         * 如果确认了不需要经过其他的 outBound， 那么 ctx.writeAndFlush 的传播路径会更短
+         */
         ctx.channel().writeAndFlush(loginResponsePacket);
     }
 

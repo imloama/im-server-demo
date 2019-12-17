@@ -15,6 +15,10 @@ public class CreateGroupResponseHandler extends SimpleChannelInboundHandler<Crea
     
     private Logger logger = LoggerFactory.getLogger(CreateGroupResponseHandler.class);
 
+    public static final CreateGroupResponseHandler INSTANCE = new CreateGroupResponseHandler();
+
+    private CreateGroupResponseHandler() {}
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponsePacket createGroupResponsePacket) throws Exception {
         logger.info("群创建成功，id 为[{}]", createGroupResponsePacket.getGroupId());

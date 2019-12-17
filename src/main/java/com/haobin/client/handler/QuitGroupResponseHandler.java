@@ -15,6 +15,10 @@ public class QuitGroupResponseHandler extends SimpleChannelInboundHandler<QuitGr
 
     private Logger logger = LoggerFactory.getLogger(QuitGroupResponseHandler.class);
 
+    public static final QuitGroupResponseHandler INSTANCE = new QuitGroupResponseHandler();
+
+    private QuitGroupResponseHandler() {}
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, QuitGroupResponsePacket responsePacket) throws Exception {
         if (responsePacket.isSuccess()) {

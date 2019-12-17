@@ -21,6 +21,10 @@ public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageR
     
     private Logger logger = LoggerFactory.getLogger(MessageResponseHandler.class);
 
+    public static final MessageResponseHandler INSTANCE = new MessageResponseHandler();
+
+    private MessageResponseHandler() {}
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageResponsePacket messageResponsePacket) throws Exception {
         String fromUserId = messageResponsePacket.getFromUserId();

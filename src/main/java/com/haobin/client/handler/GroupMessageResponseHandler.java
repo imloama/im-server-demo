@@ -13,6 +13,11 @@ import org.slf4j.LoggerFactory;
 public class GroupMessageResponseHandler extends SimpleChannelInboundHandler<GroupMessageResponsePacket> {
 
     private Logger logger = LoggerFactory.getLogger(GroupMessageResponseHandler.class);
+
+    public static final GroupMessageResponseHandler INSTANCE = new GroupMessageResponseHandler();
+
+    private GroupMessageResponseHandler() {};
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupMessageResponsePacket responsePacket) {
         String fromGroupId = responsePacket.getFromGroupId();
