@@ -64,17 +64,17 @@ public class Server {
                         // 登录请求
                         ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
                         // 认证
-                        ch.pipeline().addLast(new AuthHandler());
+                        ch.pipeline().addLast(AuthHandler.INSTANCE);
                         // 单聊信息处理
-                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(MessageRequestHandler.INSTANCE);
                         // 创建群聊
-                        ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(CreateGroupRequestHandler.INSTANCE);
                         // 加入群聊
-                        ch.pipeline().addLast(new JoinGroupRequestHandler());
+                        ch.pipeline().addLast(JoinGroupRequestHandler.INSTANCE);
                         // 退群处理
-                        ch.pipeline().addLast(new QuitGroupRequestHandler());
+                        ch.pipeline().addLast(QuitGroupRequestHandler.INSTANCE);
                         // 成员列表处理
-                        ch.pipeline().addLast(new ListGroupMemberRequestHandler());
+                        ch.pipeline().addLast(ListGroupMemberRequestHandler.INSTANCE);
                     }
                 });
         bind(serverBootstrap, port);

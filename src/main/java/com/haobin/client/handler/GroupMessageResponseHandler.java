@@ -2,6 +2,7 @@ package com.haobin.client.handler;
 
 import com.haobin.protocol.response.GroupMessageResponsePacket;
 import com.haobin.session.Session;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author haobin
  */
+@ChannelHandler.Sharable
 public class GroupMessageResponseHandler extends SimpleChannelInboundHandler<GroupMessageResponsePacket> {
 
     private Logger logger = LoggerFactory.getLogger(GroupMessageResponseHandler.class);

@@ -7,6 +7,7 @@ import com.haobin.protocol.response.LoginResponsePacket;
 import com.haobin.server.handler.LoginRequestHandler;
 import com.haobin.session.Session;
 import com.haobin.session.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author HaoBin
  * @version $Id: LoginResponseHandler.java, v0.1 2019/2/19 10:03 HaoBin
  */
+@ChannelHandler.Sharable
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
 
     private Logger logger = LoggerFactory.getLogger(LoginResponseHandler.class);

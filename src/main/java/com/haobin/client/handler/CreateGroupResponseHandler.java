@@ -1,6 +1,7 @@
 package com.haobin.client.handler;
 
 import com.haobin.protocol.response.CreateGroupResponsePacket;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @Create 2019/12/13 17:05
  * @Description: 创建群聊响应
  **/
+@ChannelHandler.Sharable
 public class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroupResponsePacket> {
     
     private Logger logger = LoggerFactory.getLogger(CreateGroupResponseHandler.class);

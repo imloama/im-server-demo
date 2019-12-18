@@ -1,6 +1,7 @@
 package com.haobin.client.handler;
 
 import com.haobin.protocol.response.QuitGroupResponsePacket;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @Create 2019/12/16 10:09
  * @Description: 退出群聊客户端处理
  **/
+@ChannelHandler.Sharable
 public class QuitGroupResponseHandler extends SimpleChannelInboundHandler<QuitGroupResponsePacket> {
 
     private Logger logger = LoggerFactory.getLogger(QuitGroupResponseHandler.class);

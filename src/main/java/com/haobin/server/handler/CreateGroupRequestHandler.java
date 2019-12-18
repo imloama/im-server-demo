@@ -5,6 +5,7 @@ import com.haobin.protocol.response.CreateGroupResponsePacket;
 import com.haobin.session.SessionUtil;
 import com.haobin.utils.IDUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -20,9 +21,14 @@ import java.util.List;
  * @Create 2019/12/13 16:30
  * @Description: 创建群聊处理器
  **/
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
     
     private Logger logger = LoggerFactory.getLogger(CreateGroupRequestHandler.class);
+
+    public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
+
+    private CreateGroupRequestHandler() {}
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket createGroupRequestPacket) throws Exception {

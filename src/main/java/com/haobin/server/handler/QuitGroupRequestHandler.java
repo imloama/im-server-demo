@@ -3,6 +3,7 @@ package com.haobin.server.handler;
 import com.haobin.protocol.request.QuitGroupRequestPacket;
 import com.haobin.protocol.response.QuitGroupResponsePacket;
 import com.haobin.session.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -12,7 +13,12 @@ import io.netty.channel.group.ChannelGroup;
  * @Create 2019/12/16 10:06
  * @Description: 退出群聊处理
  **/
+@ChannelHandler.Sharable
 public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGroupRequestPacket> {
+
+    public static final QuitGroupRequestHandler INSTANCE = new QuitGroupRequestHandler();
+
+    private QuitGroupRequestHandler() {}
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, QuitGroupRequestPacket requestPacket) throws Exception {

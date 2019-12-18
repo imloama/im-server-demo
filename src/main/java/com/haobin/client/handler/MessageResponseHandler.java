@@ -4,6 +4,7 @@
 package com.haobin.client.handler;
 
 import com.haobin.protocol.response.MessageResponsePacket;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import java.util.Date;
  * @author HaoBin
  * @version $Id: MessageResponseHandler.java, v0.1 2019/2/19 10:15 HaoBin 
  */
+@ChannelHandler.Sharable
 public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponsePacket> {
     
     private Logger logger = LoggerFactory.getLogger(MessageResponseHandler.class);

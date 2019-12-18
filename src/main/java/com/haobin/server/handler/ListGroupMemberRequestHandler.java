@@ -5,6 +5,7 @@ import com.haobin.protocol.response.ListGroupMemberResponsePacket;
 import com.haobin.session.Session;
 import com.haobin.session.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -17,7 +18,12 @@ import java.util.List;
  * @Create 2019/12/16 10:29
  * @Description: 成员列表请求处理
  **/
+@ChannelHandler.Sharable
 public class ListGroupMemberRequestHandler extends SimpleChannelInboundHandler<ListGroupMembersRequestPacket> {
+
+    public static final ListGroupMemberRequestHandler INSTANCE = new ListGroupMemberRequestHandler();
+
+    private ListGroupMemberRequestHandler() {}
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ListGroupMembersRequestPacket requestPacket) throws Exception {
