@@ -59,6 +59,8 @@ public class Server {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        // 空闲检测需要在最前面，防止其他handler出错，导致链路传不到这里，形成误判
+                        ch.pipeline().addLast(new IMIdleStateHandler());
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         // 登录请求
