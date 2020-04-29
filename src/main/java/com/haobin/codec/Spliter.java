@@ -7,6 +7,8 @@ import com.haobin.protocol.PacketCodeC;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 拆包校验魔数
@@ -15,6 +17,8 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  * @version $Id: Spliter.java, v0.1 2019/2/19 10:20 HaoBin 
  */
 public class Spliter extends LengthFieldBasedFrameDecoder {
+
+    private static final Logger log = LoggerFactory.getLogger(Spliter.class);
 
     /**
      * 4字节魔数 + 1字节版本号 + 1字节序列化算法 + 1字节指令 + 4字节长度 + 数据
@@ -32,6 +36,13 @@ public class Spliter extends LengthFieldBasedFrameDecoder {
      */
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        log.debug("split 1: " + in.toString() );
+        byte[] byteArray = new byte[in.capacity()];
+        in.readBytes(byteArray);
+        String result = new String(byteArray);
+        log.debug("split 2:  转string: " + result);
+        log.debug("=======split: start int: " + in.getInt(in.readerIndex()) );
+        log.debug("======split================="+PacketCodeC.MAGIC_NUMBER);
         // 如果前4个字节(int)不是魔数，则并非规定通讯
         if (in.getInt(in.readerIndex()) != PacketCodeC.MAGIC_NUMBER) {
             ctx.channel().close();

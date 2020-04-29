@@ -12,6 +12,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,9 +61,13 @@ public class Server {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 空闲检测需要在最前面，防止其他handler出错，导致链路传不到这里，形成误判
-                        ch.pipeline().addLast(new IMIdleStateHandler());
+                        //ch.pipeline().addLast(new IdleStateHandler(6, 0, 0));
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                        ch.pipeline().addLast(new IMIdleStateHandler());
+//                        ch.pipeline().addLast(new IdleStateHandler(6, 0, 0));
+                        //心跳请求
+                        ch.pipeline().addLast(ServerHeartBeatHandler.INSTANCE);
                         // 登录请求
                         ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
                         // 认证

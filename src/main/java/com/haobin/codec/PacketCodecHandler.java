@@ -28,7 +28,9 @@ public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
+        System.out.println("-------------------decode packet start ================");
         out.add(PacketCodeC.INSTANCE.decode(msg));
+        System.out.println("-------------------decode packet=  end===============");
     }
 
     @Override
@@ -37,5 +39,7 @@ public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
         ByteBuf byteBuf = ctx.channel().alloc().ioBuffer();
         PacketCodeC.INSTANCE.encode(byteBuf, msg);
         out.add(byteBuf);
+        System.out.println("-------------------encode packet================" + msg.toString());
+
     }
 }

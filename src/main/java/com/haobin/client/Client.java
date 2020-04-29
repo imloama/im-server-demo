@@ -8,6 +8,9 @@ import com.haobin.client.console.command.LoginConsoleCommand;
 import com.haobin.client.handler.*;
 import com.haobin.codec.PacketCodecHandler;
 import com.haobin.codec.Spliter;
+import com.haobin.protocol.request.HeartBeatRequestPacket;
+import com.haobin.protocol.request.LoginRequestPacket;
+import com.haobin.protocol.request.MessageRequestPacket;
 import com.haobin.session.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -17,6 +20,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,18 +72,21 @@ public class Client {
                     public void initChannel(SocketChannel ch) {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                        ch.pipeline().addLast(new IdleStateHandler(0, 5, 0));
+                        //心跳请求
+                        ch.pipeline().addLast(new ClientHeartBeatTimerHandler());
                         // 登录响应
-                        ch.pipeline().addLast(LoginResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(LoginResponseHandler.INSTANCE);
                         // 消息接受响应
-                        ch.pipeline().addLast(MessageResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(MessageResponseHandler.INSTANCE);
                         // 创建群聊响应
-                        ch.pipeline().addLast(CreateGroupResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(CreateGroupResponseHandler.INSTANCE);
                         // 加入群聊响应
-                        ch.pipeline().addLast(JoinGroupResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(JoinGroupResponseHandler.INSTANCE);
                         // 退出群聊
-                        ch.pipeline().addLast(QuitGroupResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(QuitGroupResponseHandler.INSTANCE);
                         // 成员列表响应
-                        ch.pipeline().addLast(ListGroupMemberResponseHandler.INSTANCE);
+//                        ch.pipeline().addLast(ListGroupMemberResponseHandler.INSTANCE);
                     }
                 });
         connect(bootstrap, host, port, maxRetry);
@@ -100,7 +107,22 @@ public class Client {
                 // 获取通道
                 Channel channel = ((ChannelFuture) future).channel();
                 // 读取控制台消息并发给服务端
-                startConsoleThread(channel);
+//                startConsoleThread(channel);
+//                LoginRequestPacket login = new LoginRequestPacket();
+//                login.setUserName("admin");
+//                login.setPassword("xxx");
+//                login.setUserId("123");
+//                channel.writeAndFlush(login);
+
+                HeartBeatRequestPacket heart = new HeartBeatRequestPacket();
+                channel.writeAndFlush(heart);
+                System.out.println("================已经发送了心跳包---------");
+
+//                MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+//                messageRequestPacket.setToUserId("123");
+//                messageRequestPacket.setMessage("hello");
+//                channel.writeAndFlush(messageRequestPacket);
+
             } else if (retry == 0) {
                 logger.error("重试次数已用完，放弃连接！");
             } else {
@@ -132,4 +154,5 @@ public class Client {
             }
         }).start();
     }
+
 }

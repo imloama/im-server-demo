@@ -27,12 +27,12 @@ public class IMIdleStateHandler extends IdleStateHandler {
     public static final int READ_IDLE_TIME = 5;
 
     public IMIdleStateHandler() {
-        super(READ_IDLE_TIME, 0, 0, TimeUnit.SECONDS);
+        super(READ_IDLE_TIME, READ_IDLE_TIME, READ_IDLE_TIME, TimeUnit.SECONDS);
     }
 
-    @Override
-    protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
-        logger.info("空闲时间过长，断开连接");
-        ctx.channel().close();
-    }
+//    @Override
+//    protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
+//        logger.info("空闲时间过长，断开连接");
+//        ctx.channel().close();
+//    }
 }

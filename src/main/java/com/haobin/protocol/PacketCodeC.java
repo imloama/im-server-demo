@@ -5,6 +5,7 @@ package com.haobin.protocol;
 
 import com.haobin.protocol.command.Command;
 import com.haobin.protocol.request.CreateGroupRequestPacket;
+import com.haobin.protocol.request.HeartBeatRequestPacket;
 import com.haobin.protocol.request.LoginRequestPacket;
 import com.haobin.protocol.request.MessageRequestPacket;
 import com.haobin.protocol.response.CreateGroupResponsePacket;
@@ -52,6 +53,7 @@ public class PacketCodeC {
         packetTypeMap.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(Command.HEARTBEAT_REQUEST, HeartBeatRequestPacket.class);
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
