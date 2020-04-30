@@ -51,12 +51,16 @@ public class WebSocketServer {
                              // 自定义处理器 - 处理 web socket 文本消息
                              .addLast(new TextWebSocketHandler())
                              // 自定义处理器 - 处理 web socket 二进制消息
-                             .addLast(new BinaryWebSocketFrameHandler());
+                             .addLast(new BinaryWebSocketFrameHandler())
+                            // socket部分
+                            .addLast(new SocketHandler())
+                             ;
+
                  }
              });
             System.out.println("服务端开启等待客户端连接....");
             Channel ch = b.bind(port).sync().channel();
-            System.out.println("webSocket server listen on port : " + 9898);
+            System.out.println("webSocket server listen on port : " + port);
             ch.closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
