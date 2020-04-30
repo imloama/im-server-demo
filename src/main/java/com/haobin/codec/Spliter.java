@@ -36,18 +36,25 @@ public class Spliter extends LengthFieldBasedFrameDecoder {
      */
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        log.debug("split 1: " + in.toString() );
-        byte[] byteArray = new byte[in.capacity()];
-        in.readBytes(byteArray);
-        String result = new String(byteArray);
-        log.debug("split 2:  转string: " + result);
+//        log.debug("split 1: " + in.toString() );
+        String str;
+        if(in.hasArray()) { // 处理堆缓冲区
+            str = new String(in.array(), in.arrayOffset() + in.readerIndex(), in.readableBytes());
+        } else { // 处理直接缓冲区以及复合缓冲区
+            byte[] bytes = new byte[in.readableBytes()];
+            in.getBytes(in.readerIndex(), bytes);
+            str = new String(bytes, 0, in.readableBytes());
+        }
+
+        System.out.println("=====================================spliter-------------decode------------");
+        log.debug("split 1:  转string: " + str);
         log.debug("=======split: start int: " + in.getInt(in.readerIndex()) );
         log.debug("======split================="+PacketCodeC.MAGIC_NUMBER);
         // 如果前4个字节(int)不是魔数，则并非规定通讯
-        if (in.getInt(in.readerIndex()) != PacketCodeC.MAGIC_NUMBER) {
-            ctx.channel().close();
-            return null;
-        }
+//        if (in.getInt(in.readerIndex()) != PacketCodeC.MAGIC_NUMBER) {
+//            ctx.channel().close();
+//            return null;
+//        }
         return super.decode(ctx, in);
     }
 }
