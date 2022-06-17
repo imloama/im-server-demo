@@ -10,7 +10,7 @@
 
     <properties>
         <netty.version>4.1.42.Final</netty.version>
-        <fastjson.version>1.2.29</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <junit.version>4.12</junit.version>
         <lombok.verseion>1.18.10</lombok.verseion>
         <logback.version>1.2.3</logback.version>
